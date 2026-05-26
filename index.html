@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QR Code Generator (ไม่มีวันหมดอายุ)</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+    
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f4f7f6;
+            color: #333;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px;
+        }
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            max-width: 400px;
+            width: 100%;
+        }
+        h1 {
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+        }
+        input[type="text"] {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            font-size: 1rem;
+        }
+        button {
+            width: 100%;
+            padding: 12px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        #qrcode {
+            margin-top: 25px;
+            display: flex;
+            justify-content: center;
+        }
+        .note {
+            margin-top: 15px;
+            font-size: 0.85rem;
+            color: #777;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>สร้าง QR Code ถาวร 🚀</h1>
+        <input type="text" id="textInput" placeholder="ใส่ URL หรือข้อความที่นี่..." onkeydown="if(event.key === 'Enter') generateQR()">
+        <button onclick="generateQR()">สร้าง QR Code</button>
+        
+        <div id="qrcode"></div>
+        
+        <p class="note">QR Code นี้สร้างและประมวลผลบนเบราว์เซอร์ของคุณโดยตรง (ไม่มีการเก็บข้อมูล และไม่มีวันหมดอายุ)</p>
+    </div>
+
+    <script>
+        // ฟังก์ชันสำหรับสร้าง QR Code
+        function generateQR() {
+            const textInput = document.getElementById("textInput").value.trim();
+            const qrContainer = document.getElementById("qrcode");
+
+            // เช็คว่าผู้ใช้พิมพ์อะไรมาหรือยัง
+            if (!textInput) {
+                alert("กรุณาใส่ข้อความหรือ URL ก่อนครับ");
+                return;
+            }
+
+            // ล้างรูป QR Code เก่าออกก่อน (ถ้ามี)
+            qrContainer.innerHTML = "";
+
+            // สร้าง QR Code ใหม่
+            new QRCode(qrContainer, {
+                text: textInput,
+                width: 256, // ขนาดกว้าง
+                height: 256, // ขนาดสูง
+                colorDark : "#000000", // สีของตัว QR
+                colorLight : "#ffffff", // สีพื้นหลัง
+                correctLevel : QRCode.CorrectLevel.H // ระดับการซ่อมแซมตัวเองสูงสุด (กันภาพแหว่ง)
+            });
+        }
+    </script>
+
+</body>
+</html>
